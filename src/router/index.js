@@ -1,30 +1,29 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
-import DestinationsCategoryView from "@/views/destinations/CategoryView.vue";
-import DestinationsDetailView from "@/views/destinations/DetailView.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: HomeView,
   },{
     path: "/about",
-    name: "About",
+    name: "about",
     component: AboutView
   },{
     path: "/destinations",
-    name: "DestinationsCategory",
-    component: DestinationsCategoryView
+    name: "destinations.category",
+    component: () => import('@/views/destinations/CategoryView.vue')
   },{
     path: "/destinations/:slug",
-    name: "DestinationsDetail",
-    component: DestinationsDetailView
+    name: "destinations.detail",
+    component: () => import('@/views/destinations/DetailView.vue')
   }
 ];
 
 export default createRouter({
   history: createWebHistory(),
   routes,
+  linkActiveClass: 'active'
 });
