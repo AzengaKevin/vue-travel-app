@@ -24,9 +24,15 @@ const destination = computed(() => sourceData.destinations.find(dest => dest.slu
     <section class="mt-4">
         <h2>Top Experiences In {{ destination.name }}</h2>
         <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-            <div v-for="experience in destination.experiences" :key="experience.slug" class="col">
+            <router-link v-for="experience in destination.experiences" :key="experience.slug"
+                class="col text-decoration-none"
+                :to="{ name: 'experiences.detail', params: { slug: destination.slug, experienceSlug: experience.slug } }">
                 <experience-card :experience="experience" />
-            </div>
+            </router-link>
         </div>
+    </section>
+
+    <section>
+        <router-view />
     </section>
 </template>
