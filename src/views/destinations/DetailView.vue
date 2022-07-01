@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import sourceData from '@/data.json';
 import ExperienceCard from '@/components/ExperienceCard.vue';
@@ -32,7 +32,17 @@ const destination = computed(() => sourceData.destinations.find(dest => dest.slu
         </div>
     </section>
 
-    <section>
-        <router-view />
-    </section>
+    <div id="experiences-modal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Top {{ destination.name }} Experiences</h5>
+                    <button type="button" data-bs-dismiss="modal" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <router-view :key="$router.path" />
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

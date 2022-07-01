@@ -1,16 +1,32 @@
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import sourceData from '@/data.json';
 
 const route = useRoute()
+const router = useRouter()
 
 const slug = computed(() => route.params.slug)
+
 const experienceSlug = computed(() => route.params.experienceSlug)
 
 const destination = computed(() => sourceData.destinations.find(dest => dest.slug === slug.value))
 
 const experience = computed(() => destination.value.experiences.find(exp => exp.slug === experienceSlug.value))
+
+onMounted(() => {
+
+    if (!window.experiencesModal)
+        window.experiencesModal = new bootstrap.Modal(document.getElementById("experiences-modal"))
+
+    window.experiencesModal.show();
+
+    const myModalEl = document.getElementById('experiences-modal')
+
+    myModalEl.addEventListener('hidden.bs.modal', event => {
+        router.go(-1)
+    })
+})
 
 </script>
 <template>
